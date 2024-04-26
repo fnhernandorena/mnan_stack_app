@@ -7,15 +7,23 @@ type Category = 'Clothes' | 'Toys' | 'Sports';
     timestamps: true,
 })
 export class Product extends Document{
-    @Prop()
+    @Prop({ required: true })
     title: string
-    @Prop()
+    @Prop({ required: true })
     description: string
-    @Prop()
+    @Prop({ required: true })
     stock: number
-    @Prop()
+    @Prop({ required: true })
     price: number
-    @Prop()
+    @Prop({
+        required: true,
+        validate: {
+            validator: function(value) {
+                return ['Clothes', 'Toys', 'Sports'].includes(value);
+            },
+            message: props => `${props.value} is not a valid category!`
+        }
+    })
     category: Category
 }
 
