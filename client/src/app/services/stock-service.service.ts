@@ -14,4 +14,7 @@ export class StockService {
   createProduct(data:any){
     return this.http.post('http://localhost:3000/stock', data);
   }
+  deleteProduct(id:string){
+    return this.http.delete(`http://localhost:3000/stock/${id}`);
+  }
 }

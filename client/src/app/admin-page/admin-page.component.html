@@ -1,0 +1,20 @@
+<div class="container-sm px-4">
+    <a href="admin/new" class="btn-success btn d-flex m-1 justify-content-center">Add product!</a>
+  <div class="d-flex justify-content-around flex-wrap">
+    <div *ngFor="let p of stock" class="card my-2" style="width: 18rem">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+          <h5 class="card-title m-0">{{ p.title }}</h5>
+          <div><a href="" class="btn mx-1">Edit</a>
+           <a class="btn" (click)="deleteProduct(p._id)">Delete</a></div>
+        </div>
+        <p class="card-text">{{ p.description }}</p>
+        <p class="card-text">Category: {{ p.category }}</p>
+        <p class="card-text">Value: ${{ p.price }}</p>
+        <p class="card-text">Stock: {{ p.stock }} items</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
