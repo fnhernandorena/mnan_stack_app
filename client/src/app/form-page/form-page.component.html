@@ -1,15 +1,19 @@
-<form class="formulario" (ngSubmit)="handleSubmit()" (formdata)="formData">
-<div class="mb-3">
-<label for="" class="form-label">Title</label>
-<input placeholder="d" type="text">
-</div>
-<div class="mb-3">
-<label for="" class="form-label">Title</label>
-<input placeholder="d" type="text">
-</div>
-<div class="mb-3">
-<label for="" class="form-label">Title</label>
-<input placeholder="d" type="text">
-</div>
-<button type="submit" class="btn btn-primary">Save</button>
+<form [formGroup]="formularioContacto" (ngSubmit)="submit()">
+
+  <p>Nombre:
+    <input type="text" placeholder="d" formControlName="title">
+  </p>
+  <p>des:
+    <input type="text" required placeholder="d" formControlName="description">
+  </p>
+  <p>st:
+    <input type="number" required placeholder="d" formControlName="stock">
+  </p>
+  <p>cat:
+    <input type="text" required placeholder="d" formControlName="category">
+  </p>
+  <p>pric
+    <input type="number" placeholder="d"  formControlName="price">
+  </p>
+  <button type="submit">Confirmar</button>
 </form>

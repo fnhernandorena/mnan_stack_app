@@ -22,7 +22,7 @@ export class AdminPageComponent {
  }
  deleteProduct(id: string) {
   this.stockService.deleteProduct(id).subscribe(() => {
-    this.getStock();
+     this.getStock();
   });
 }
 }

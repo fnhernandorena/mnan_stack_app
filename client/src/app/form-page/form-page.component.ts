@@ -1,29 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Component } from '@angular/core';
+import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
+import { StockService } from '../services/stock-service.service';
 
 @Component({
   selector: 'app-form-page',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './form-page.component.html',
   styleUrl: './form-page.component.css'
 })
-export class FormPageComponent implements OnInit{
-  formData: FormGroup;
+export class FormPageComponent{
+  datos = '';
 
-  constructor(private form: FormBuilder) {
-    this.formData = form.group({
-      title: new FormControl('',[]),
-      description: new FormControl('',[]),
-      category: new FormControl('',[]),
-      price: new FormControl('',[]),
-      stock: new FormControl('',[]),
-    })
-   }
+  constructor(private stockService: StockService){}
 
-  ngOnInit(): void {
-    
+  formularioContacto = new FormGroup({
+    title: new FormControl('', Validators.required) ,
+    description: new FormControl('', Validators.required),
+    category: new FormControl('', Validators.required),
+    price: new FormControl('', Validators.required),
+    stock: new FormControl('', Validators.required)
+  });
+
+  submit() {
+    const jsonData = JSON.stringify(this.formularioContacto.value);
+    console.log(jsonData);
+    this.datos = jsonData;
+    this.stockService.createProduct(this.formularioContacto.value).subscribe(
+      (data: any) => {})
   }
-  handleSubmit(){alert("Please")}
 
 }
