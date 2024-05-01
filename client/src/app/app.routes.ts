@@ -7,4 +7,5 @@ export const routes: Routes = [
     {path: 'home', component: PublicPageComponent},
     {path: 'admin', component: AdminPageComponent},
     {path: 'admin/new', component: FormPageComponent},
+    { path: 'admin/edit/:id', component: FormPageComponent },
     {path: '**', redirectTo: 'home', pathMatch: 'full'},];
