@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { StockService } from '../services/stock-service.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-page',
@@ -11,9 +12,10 @@ import { StockService } from '../services/stock-service.service';
 })
 export class FormPageComponent implements OnInit {
   datos = '';
-  modoEdicion = false;=
+  modoEdicion = false;
+  blockId: string = '';
 
-  constructor(private stockService: StockService) {}
+  constructor(private stockService: StockService, private route: ActivatedRoute, private router: Router) {}
 
   formularioContacto = new FormGroup({
     title: new FormControl('', Validators.required),
@@ -24,15 +26,15 @@ export class FormPageComponent implements OnInit {
   });
 
   ngOnInit() {
-    const blockId = this.route.snapshot.paramMap.get('id');
-    if (blockId) {
+    const idUrl = this.route.snapshot.paramMap.get('id');
+    if(idUrl !== null){
+      this.blockId=idUrl
+    }
+    if (this.blockId) {
       this.modoEdicion = true;
-      this.stockService.getProduct(blockId).subscribe(
+      this.stockService.getProduct(this.blockId).subscribe(
         (block: any) => {
           this.formularioContacto.patchValue(block);
-        },
-        (error: any) => {
-          console.error('Error al obtener los datos del bloque:', error);
         }
       );
     }
@@ -40,26 +42,18 @@ export class FormPageComponent implements OnInit {
 
   submit() {
     const formData = this.formularioContacto.value;
-    const jsonData = JSON.stringify(formData);
-    console.log(jsonData);
-    this.datos = jsonData;
+    this.datos  = JSON.stringify(formData);
 
     if (this.modoEdicion) {
-      this.stockService.updateProduct(formData).subscribe(
-        (data: any) => {
-        },
-        (error: any) => {
-          console.error('Error al actualizar el bloque:', error);
-        }
-      );
+      this.stockService.updateProduct(this.blockId, formData).subscribe(
+        () => {
+          this.router.navigate(['/admin']);
+        });
     } else {
       this.stockService.createProduct(formData).subscribe(
-        (data: any) => {
-        },
-        (error: any) => {
-          console.error('Error al crear el bloque:', error);
-        }
-      );
+        () => {
+          this.router.navigate(['/admin']);
+        });
     }
   }
 }

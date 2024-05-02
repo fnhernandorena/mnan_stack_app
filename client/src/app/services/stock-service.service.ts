@@ -17,4 +17,10 @@ export class StockService {
   deleteProduct(id:string){
     return this.http.delete(`http://localhost:3000/stock/${id}`);
   }
+  getProduct(id:string){
+    return this.http.get(`http://localhost:3000/stock/${id}`);
+  }
+  updateProduct(id:string, data:any){
+    return this.http.put(`http://localhost:3000/stock/${id}`, data);
+  }
 }
